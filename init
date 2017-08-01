@@ -1,0 +1,115 @@
+#!/bin/bash
+set -eo pipefail
+
+##############################################
+# Start Editing here                         #
+##############################################
+
+# git configs
+GIT_USER="luanmuniz"
+GIT_NAME="Luan Muniz"
+GIT_EMAIL="luan@luanmuniz.com.br"
+
+# OSX Configs
+COMPUTERNAME="Luan Muniz Linux"
+LOCALHOSTNAME="luanmuniz"
+
+# Set directorys Globals
+DF_GIT="https://github.com/${GIT_USER}/dotfiles-linux"
+PROJECTS_DIR="${HOME}/Projects"
+
+NVM_VERSION=0.33.2
+
+##############################################
+# You can stop Editing                       #
+##############################################
+
+DF_DIR="${HOME}/.dotfiles"
+source functions
+
+if [[ ! -d ${DF_DIR} ]]; then
+
+	e_header "Downloading dotfiles...\n"
+	mkdir ${DF_DIR}
+
+	curl -fsSLo ${HOME}/dotfiles.tar.gz "${DF_GIT}/tarball/master"
+	tar -zxf ${HOME}/dotfiles.tar.gz --strip-components 1 -C "${HOME}/dotfiles-temp"
+
+	rm -rf ${HOME}/dotfiles.tar.gz
+
+	cd "${HOME}/dotfiles-temp"
+
+else
+
+	cd ${DF_DIR}
+    git fetch
+    git pull
+	git checkout master
+	e_success "Dotfiles update complete!"
+
+	sleep 10
+	sudo shutdown -r now
+
+fi
+
+source functions
+
+sudo -v
+
+# Keep-alive: update existing `sudo` time stamp until this has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null 
+
+e_header "Applying permissions on dotfiles folder"
+sudo chmod -R 777 "${HOME}/dotfiles-temp"
+
+# Create my Project folder
+if [[ ! -d ${PROJECTS_DIR} ]]; then
+	e_header "Creating Projects folder..."
+	sudo mkdir ${PROJECTS_DIR}
+fi
+
+e_header "Applying permissions on Projects folder"
+sudo chmod -R 777 ${PROJECTS_DIR}
+
+e_header "Updating system"
+sudo apt update
+sudo apt upgrade -y
+sudo apt autoremove -y
+
+source install/cli
+source install/apps
+
+source config/ssh-keys
+source config/init
+
+e_header "Updating dotfiles repository"
+git clone "https://${GIT_USER}@github.com/${GIT_USER}/dotfiles" ${DF_DIR}
+sudo chmod -R 777 ${DF_DIR}
+
+# Copy `.gitconfig`.
+# Any global git commands in `~/.bash_profile.local` will be written to
+# `.gitconfig`. This prevents them being committed to the repository.
+rsync -avz --quiet "${DF_DIR}/profile/gitconfig"  "${HOME}/.gitconfig"
+
+# Create the necessary symbolic links between the `.dotfiles` and `HOME` directory.
+# The `bash_profile` sources other files directly from the repository.
+link "${DF_DIR}/profile/bashrc" ".bashrc"
+link "${DF_DIR}/profile/bash_profile" ".bash_profile"
+link "${DF_DIR}/profile/inputrc" ".inputrc"
+link "${DF_DIR}/profile/gitattributes" ".gitattributes"
+link "${DF_DIR}/profile/gitignore" ".gitignore_global"
+link "${DF_DIR}/profile/gitconfig" ".gitconfig"
+
+git config --global user.name $GIT_NAME
+git config --global user.email $GIT_EMAIL
+
+e_success "Dotfiles update complete!"
+e_header "Removing temp folder and Restarting ..."
+
+cd ..
+rm "${HOME}/dotfiles-temp"
+
+sleep 10
+sudo shutdown -r now
+
+

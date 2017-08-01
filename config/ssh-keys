@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo rm -rf "${HOME}/.ssh"
+ln -s "${HOME}/Dropbox/Pessoal/SSH\ Keys" "${HOME}/.ssh"
