@@ -38,6 +38,6 @@ Just run:
 - Spotify
 - Slack
 - Nylas Mail
-- Sublime
 - Skype
-- 
+- Sublime Text 3
+- Private Internet Access VPN

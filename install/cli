@@ -4,7 +4,9 @@ e_header "Installing Essential"
 sudo apt update && sudo apt install -y \
     build-essential \
     apt-transport-https \
-    ca-certificates
+    ca-certificates \
+    openvpn \
+    network-manager-openvpn
 
 e_header "Installing Tools"
 sudo apt update && sudo apt install -y \
@@ -12,7 +14,12 @@ sudo apt update && sudo apt install -y \
     openssh-server \
     curl \
     unzip \
-    git
+    git \
+    wine \
+    nmap \
+    telnet \
+    tree \
+    postgresql
 
 e_header "Installing Python & pip"
 if has_not pip; then
