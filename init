@@ -1,5 +1,4 @@
 #!/bin/bash
-set -eo pipefail
 
 ##############################################
 # Start Editing here                         #
@@ -17,8 +16,6 @@ LOCALHOSTNAME="zimp-dev-1"
 # Set directorys Globals
 DF_GIT="https://github.com/${GIT_USER}/dotfiles-linux"
 PROJECTS_DIR="${HOME}/Projects"
-
-NVM_VERSION=0.33.2
 
 ##############################################
 # You can stop Editing                       #

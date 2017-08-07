@@ -24,21 +24,21 @@ sudo apt update && sudo apt install -y \
     postgresql \
     dconf-tools
 
-e_header "Installing Python & pip"
-if has_not pip; then
+if ! type_exists pip; then
+    e_header "Installing Python & pip"
     sudo apt update && sudo apt install -y python-pip python-dev
     sudo pip install --upgrade pip 
     sudo pip install --upgrade virtualenv
 fi
 
-e_header "Installing AWS CLI"
-if has_not aws; then
+if ! type_exists aws; then
+    e_header "Installing AWS CLI"
     pip install --upgrade --user awscli
     aws --version
 fi
 
-e_header "Installing Docker"
-if has_not docker; then
+if ! type_exists docker; then
+    e_header "Installing Docker"
     sudo apt update && sudo apt install -y linux-image-extra-$(uname -r)
     sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
     sudo sh -c "echo 'deb https://apt.dockerproject.org/repo ubuntu-$(lsb_release -sc) main' | cat > /etc/apt/sources.list.d/docker.list"
@@ -50,11 +50,15 @@ if has_not docker; then
     sudo usermod -aG docker $(id -un)
 fi
 
-e_header "Installing NVM & Node.js"
-if has_not nvm; then
-    curl -o- "https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/install.sh" | bash 
-    exec bash
-    . ~/.bashrc
+if ! type_exists nvm; then
+    e_header "Installing NVM & Node.js"
+
+    export NVM_VERSION=0.33.2
+    wget -qO- "https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/install.sh" | bash
+
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+    source ~/.bashrc
     nvm install v6
     nvm install v7
     nvm install v8
@@ -62,8 +66,8 @@ if has_not nvm; then
     nvm alias default v8
 fi
 
-e_header "Installing Yarn"
-if has_not yarn; then
+if ! type_exists yarn; then
+    e_header "Installing Yarn"
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
     sudo apt update && sudo apt install -y yarn
@@ -73,8 +77,8 @@ fi
 e_header "Installing NPM Global Modules"
 npm i -g nodemon pm2
 
-e_header "Installing Heroku Toolbelt"
-if has_not heroku; then
+if ! type_exists heroku; then
+    e_header "Installing Heroku Toolbelt"
     wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
     heroku --version
 fi
