@@ -64,4 +64,4 @@ Terminal=false
 Type=Application
 Categories=Development;
 EOL
-chmod -x ~/.local/share/applications/postman.desktop
+chmod +x ~/.local/share/applications/postman.desktop
