@@ -5,23 +5,23 @@
 ##############################################
 
 # git configs
-GIT_USER="luanmuniz"
-GIT_NAME="Luan Muniz"
-GIT_EMAIL="luan@luanmuniz.com.br"
+export GIT_USER="luanmuniz"
+export GIT_NAME="Luan Muniz"
+export GIT_EMAIL="luan@luanmuniz.com.br"
 
 # Linux Configs
-COMPUTERNAME="Zimp Dev 1"
-LOCALHOSTNAME="zimp-dev-1"
+export COMPUTERNAME="Zimp Dev 1"
+export LOCALHOSTNAME="zimp-dev-1"
 
 # Set directorys Globals
-DF_GIT="https://github.com/${GIT_USER}/dotfiles-linux"
-PROJECTS_DIR="${HOME}/Projects"
+export DF_GIT="https://github.com/${GIT_USER}/dotfiles-linux"
+export PROJECTS_DIR="${HOME}/Projects"
 
 ##############################################
 # You can stop Editing                       #
 ##############################################
 
-DF_DIR="${HOME}/.dotfiles"
+export DF_DIR="${HOME}/.dotfiles"
 source functions
 
 if [[ ! -d ${DF_DIR} ]]; then

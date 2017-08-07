@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo hostnamectl set-hostname ${COMPUTERNAME}
+sudo hostnamectl set-hostname ${LOCALHOSTNAME}
 
 sudo service preload restart
 sudo sysctl vm.swappiness=10
