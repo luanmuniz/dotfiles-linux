@@ -43,5 +43,25 @@ sudo apt install -fy
 rm ~/Downloads/vscode.deb
 
 e_header "Installing Private Internet Access"
-wget "wget https://www.privateinternetaccess.com/openvpn/openvpn.zip" -O ~/Downloads/openvpn.zip
+wget "https://www.privateinternetaccess.com/openvpn/openvpn.zip" -O ~/Downloads/openvpn.zip
 sudo unzip ~/Downloads/openvpn.zip
+
+e_header "Installing Postman"
+wget "https://dl.pstmn.io/download/latest/linux64" -O ~/Downloads/postman.tar.gz
+sudo tar -xzf  ~/Downloads/postman.tar.gz -C /opt
+rm ~/Downloads/postman.tar.gz
+if [ -L "/usr/bin/postman" ];then
+    sudo rm -f /usr/bin/postman
+fi
+sudo ln -s /opt/Postman/Postman /usr/bin/postman
+cat > ~/.local/share/applications/postman.desktop <<EOL
+[Desktop Entry]
+Encoding=UTF-8
+Name=Postman
+Exec=postman
+Icon=/opt/Postman/resources/app/assets/icon.png
+Terminal=false
+Type=Application
+Categories=Development;
+EOL
+chmod ~/.local/share/applications/postman.desktop +x
