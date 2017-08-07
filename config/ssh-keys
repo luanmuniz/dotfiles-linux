@@ -3,4 +3,10 @@
 e_header "Adding Keys"
 sudo rm -rf "${HOME}/.ssh"
 ln -sT /home/luanmuniz/Dropbox/Pessoal/SSH\ Keys /home/luanmuniz/.ssh
-ssh-add /home/luanmuniz/.ssh/*
+chmod 400 ${HOME}/.ssh/*
+
+for possiblekey in ${HOME}/.ssh/*; do
+    if grep -q PRIVATE "$possiblekey"; then
+        ssh-add "$possiblekey"
+    fi
+done
