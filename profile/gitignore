@@ -1,0 +1,57 @@
+# General
+###########
+.ssh
+.svn
+.hg
+.dropbox
+*.ini
+*.log
+.sparkleshare
+*.cache
+backup/
+cache/
+*.sublime-workspace
+
+# Mac OSX
+###########
+.DS_Store*
+.DS_Store
+.Spotlight-V100
+.Trashes
+._*
+
+# Windows
+###########
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Python files
+###########
+*.pyc
+*.pot
+
+# CMS's
+###########
+/wp-content/uploads/*[^index.php]
+/wp-content/backups/
+/wp-content/upgrade/
+*/cache/*[^index.php]
+*/logs/*[^index.php]
+
+# Grunt/Compass/Node.js/NPM
+###########
+.sass-cache
+node_modules
+npm-debug.log
+
+# Packages
+###########
+*.zip
+*.rar
+*.tar
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar

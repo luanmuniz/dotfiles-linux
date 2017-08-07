@@ -1,0 +1,42 @@
+#!/bin/bash
+
+declare -a files=(
+	$HOME/.dotfiles/profile/aliases # Aliases
+)
+
+# If these files are readable, source them
+for index in ${!files[*]}
+do
+	if [[ -r ${files[$index]} ]]; then
+		source ${files[$index]}
+	fi
+done
+
+unset files
+
+# Make sublime the default editor
+export EDITOR='subl -w'
+
+# Ignore duplicate commands in the history
+export HISTCONTROL=ignoredups
+
+# Make some commands not show up in history
+export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
+
+# Make new shells get the history lines from all previous
+# shells instead of the default "last window closed" history
+export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+
+export NVM_DIR="${HOME}/.nvm"
+[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob
+
+# This is not needed in iTerm or Terminal if setting locale variables
+# automatically has not been disabled. Setting LANG normally changes
+# all actual locale variables, so LC_ALL doesn't have to be set.
+export LANG=en_US.UTF-8
+
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced

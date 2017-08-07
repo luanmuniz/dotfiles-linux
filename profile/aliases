@@ -1,0 +1,92 @@
+#!/bin/bash
+
+# Dirs
+alias projects='cd ${HOME}/Projects'
+alias dropbox='cd ${HOME}/Dropbox'
+alias dotfiles='cd ${HOME}/.dotfiles'
+
+# General
+alias home='cd ~'
+alias ~='cd ~'
+alias ..='cd ..'
+alias cd..="cd .."
+alias copy='clip <-'
+alias clip='clip <-'
+
+# Git
+alias gd='git diff'
+alias gc='git commit -m'
+alias ga='git add'
+
+# Processes
+alias tm='top -o vsize' # memory
+alias tu='top -o cpu' # cpu
+
+# Network
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en1"
+alias hosts="sudo nano /private/etc/hosts"
+
+# Flush DNS cache
+alias flushdns="dscacheutil -flushcache"
+
+# Remove folder not empty
+alias rm="rm -rf"
+
+# Create server at folder
+alias httpserver="python -m SimpleHTTPServer"
+
+# Show/hide hidden files in Finder
+alias showdotfiles="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+alias hidedotfiles="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+
+# Enhanced WHOIS lookups
+alias whois="whois -h whois-servers.net"
+
+# GIVE ME PERMISSION
+alias givemepermission="sudo chown -R $USER"
+
+# Image width
+dim (){
+	sips $1 -g pixelWidth -g pixelHeight
+}
+
+extract () {
+    if [ -f $1 ] ; then
+      case $1 in
+        *.tar.bz2)   tar xjf $1     ;;
+        *.tar.gz)    tar xzf $1     ;;
+        *.bz2)       bunzip2 $1     ;;
+        *.rar)       unrar e $1     ;;
+        *.gz)        gunzip $1      ;;
+        *.tar)       tar xf $1      ;;
+        *.tbz2)      tar xjf $1     ;;
+        *.tgz)       tar xzf $1     ;;
+        *.zip)       unzip $1       ;;
+        *.Z)         uncompress $1  ;;
+        *.7z)        7z x $1        ;;
+        *)     echo "'$1' cannot be extracted via extract()" ;;
+         esac
+     else
+         echo "'$1' is not a valid file"
+     fi
+}
+
+s(){
+    if [[ $# == 0 ]]; then
+        sudo $(history -p '!!')
+    else
+        sudo "$@"
+    fi
+}
+
+spy () {
+	lsof -i -P +c 0 +M | grep -i "$1"
+}
+
+# ------------------------------------------------------------------------------
+# | Other                                                                      |
+# ------------------------------------------------------------------------------
+
+alias nyancat="telnet miku.acm.uiuc.edu"
+alias starwars="telnet towel.blinkenlights.nl"

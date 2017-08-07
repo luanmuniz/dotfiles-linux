@@ -1,0 +1,42 @@
+[alias]
+
+	# When doing "git git log" or some such, do not complain about "git" not
+	# being a valid Git command. This happens when copy-pasting examples, for
+	# instance.
+	git = !git
+
+	# Undo the last Commit
+	undocommit = reset --hard HEAD~1
+
+	# Add undtacked, remove deleted em show status
+	adda = !git add -A && git status
+
+	# Nice log
+	nicelog = log --pretty=nice --graph --date-order --date=short --max-count=15
+
+	# Find out who is currently active on the repository
+	# Displays committers in descending order of number of commits
+	who = shortlog --numbered --summary --email --no-merges --since="3 months"
+
+[apply]
+	# Detect whitespace errors when applying a patch
+	whitespace = fix
+
+[merge]
+	#Include summaries of merge commits in newly created merge commit messages
+	log = true
+
+[color]
+	ui = auto
+
+[core]
+	excludesfile = ~/.gitignore_global
+	attibutesfile = ~/.gitattributes
+	whitespace = space-before-tab,indent-with-non-tab,trailing-space
+	editor = sublime
+
+[diff "exif"]
+	textconv = exiftool
+
+[pretty]
+	nice = "%C(magenta)%h %C(yellow)%ad %C(white)| %C(green)%s%C(red)%d %C(yellow)[%an]"
