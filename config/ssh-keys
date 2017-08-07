@@ -3,3 +3,4 @@
 e_header "Adding Keys"
 sudo rm -rf "${HOME}/.ssh"
 ln -sT /home/luanmuniz/Dropbox/Pessoal/SSH\ Keys /home/luanmuniz/.ssh
+ssh-add /home/luanmuniz/.ssh/*

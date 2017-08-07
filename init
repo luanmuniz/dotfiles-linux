@@ -74,7 +74,7 @@ source config/ssh-keys
 source config/init
 
 e_header "Updating dotfiles repository"
-git clone "https://${GIT_USER}@github.com/${GIT_USER}/dotfiles" ${DF_DIR}
+git clone git@github.com:${GIT_USER}/dotfiles.git ${DF_DIR}
 sudo chmod -R 777 ${DF_DIR}
 
 # Copy `.gitconfig`.
