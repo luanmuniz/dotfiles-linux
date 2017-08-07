@@ -6,7 +6,9 @@ sudo apt update && sudo apt install -y \
     apt-transport-https \
     ca-certificates \
     openvpn \
-    network-manager-openvpn
+    network-manager-openvpn \
+    preload \
+    zram-config
 
 e_header "Installing Tools"
 sudo apt update && sudo apt install -y \
@@ -19,7 +21,8 @@ sudo apt update && sudo apt install -y \
     nmap \
     telnet \
     tree \
-    postgresql
+    postgresql \
+    dconf-tools
 
 e_header "Installing Python & pip"
 if has_not pip; then
@@ -49,8 +52,9 @@ fi
 
 e_header "Installing NVM & Node.js"
 if has_not nvm; then
-    curl -o- "https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/install.sh" | bash
-    source ~/.bashrc
+    curl -o- "https://raw.githubusercontent.com/creationix/nvm/v${NVM_VERSION}/install.sh" | bash 
+    exec bash
+    . ~/.bashrc
     nvm install v6
     nvm install v7
     nvm install v8

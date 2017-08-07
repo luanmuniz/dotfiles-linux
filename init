@@ -10,9 +10,9 @@ GIT_USER="luanmuniz"
 GIT_NAME="Luan Muniz"
 GIT_EMAIL="luan@luanmuniz.com.br"
 
-# OSX Configs
-COMPUTERNAME="Luan Muniz Linux"
-LOCALHOSTNAME="luanmuniz"
+# Linux Configs
+COMPUTERNAME="Zimp Dev 1"
+LOCALHOSTNAME="zimp-dev-1"
 
 # Set directorys Globals
 DF_GIT="https://github.com/${GIT_USER}/dotfiles-linux"
@@ -29,10 +29,11 @@ source functions
 
 if [[ ! -d ${DF_DIR} ]]; then
 
-	e_header "Downloading dotfiles...\n"
+	e_header "Downloading dotfiles..."
 	mkdir ${DF_DIR}
 
 	curl -fsSLo ${HOME}/dotfiles.tar.gz "${DF_GIT}/tarball/master"
+	mkdir ${HOME}/dotfiles-temp
 	tar -zxf ${HOME}/dotfiles.tar.gz --strip-components 1 -C "${HOME}/dotfiles-temp"
 
 	rm -rf ${HOME}/dotfiles.tar.gz
@@ -51,13 +52,6 @@ else
 	sudo shutdown -r now
 
 fi
-
-source functions
-
-sudo -v
-
-# Keep-alive: update existing `sudo` time stamp until this has finished
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null 
 
 e_header "Applying permissions on dotfiles folder"
 sudo chmod -R 777 "${HOME}/dotfiles-temp"
@@ -95,6 +89,7 @@ rsync -avz --quiet "${DF_DIR}/profile/gitconfig"  "${HOME}/.gitconfig"
 # The `bash_profile` sources other files directly from the repository.
 link "${DF_DIR}/profile/bashrc" ".bashrc"
 link "${DF_DIR}/profile/bash_profile" ".bash_profile"
+link "${DF_DIR}/profile/aliases" ".bash_aliases"
 link "${DF_DIR}/profile/inputrc" ".inputrc"
 link "${DF_DIR}/profile/gitattributes" ".gitattributes"
 link "${DF_DIR}/profile/gitignore" ".gitignore_global"
