@@ -5,28 +5,26 @@
 ##############################################
 
 # git configs
-export GIT_USER="luanmuniz"
-export GIT_NAME="Luan Muniz"
-export GIT_EMAIL="luan@luanmuniz.com.br"
+GIT_USER="luanmuniz"
+GIT_NAME="Luan Muniz"
+GIT_EMAIL="luan@luanmuniz.com.br"
 
 # Linux Configs
-export COMPUTERNAME="Zimp Dev 1"
-export LOCALHOSTNAME="zimp-dev-1"
+COMPUTERNAME="Zimp Dev 1"
+LOCALHOSTNAME="zimp-dev-1"
 
 # Set directorys Globals
-export DF_GIT="https://github.com/${GIT_USER}/dotfiles-linux"
-export PROJECTS_DIR="${HOME}/Projects"
+DF_GIT="https://github.com/${GIT_USER}/dotfiles-linux"
+PROJECTS_DIR="${HOME}/Projects"
 
 ##############################################
 # You can stop Editing                       #
 ##############################################
 
 export DF_DIR="${HOME}/.dotfiles"
-source functions
-
 if [[ ! -d ${DF_DIR} ]]; then
 
-	e_header "Downloading dotfiles..."
+	echo "Downloading dotfiles..."
 	mkdir ${DF_DIR}
 
 	curl -fsSLo ${HOME}/dotfiles.tar.gz "${DF_GIT}/tarball/master"
@@ -40,8 +38,8 @@ if [[ ! -d ${DF_DIR} ]]; then
 else
 
 	cd ${DF_DIR}
-    git fetch
-    git pull
+	git fetch
+	git pull
 	git checkout master
 	e_success "Dotfiles update complete!"
 
@@ -49,6 +47,8 @@ else
 	sudo shutdown -r now
 
 fi
+
+source functions
 
 e_header "Applying permissions on dotfiles folder"
 sudo chmod -R 777 "${HOME}/dotfiles-temp"
@@ -103,5 +103,3 @@ rm "${HOME}/dotfiles-temp"
 
 sleep 10
 sudo shutdown -r now
-
-
